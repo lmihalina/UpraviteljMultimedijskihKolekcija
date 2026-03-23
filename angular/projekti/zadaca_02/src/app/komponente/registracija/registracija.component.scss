@@ -1,0 +1,51 @@
+section
+{
+    text-align: center;
+}
+
+form
+{
+    display: inline-block;
+    background: linear-gradient(to left, #079167, #085caa);
+    border-radius: 1rem;
+    border: none;
+    border-radius: 1rem;
+    text-align: center;
+
+        label
+        {
+            margin: 0 1rem;
+        }
+
+        button
+        {
+            padding: 0.5rem;
+            margin: 2rem;
+            font-size: 1rem;
+            border-radius: 1rem;
+            border: none;
+            transition: transform 0.5s ease;
+
+            &[type="submit"]
+            {
+                background-color: limegreen;
+                &:hover
+                {
+                    background: linear-gradient(to right, #079167, #085caa);
+                    transform: scale(1.2) rotate(360deg);
+                }
+            }
+
+            &[type="reset"]
+            {
+                background-color: red;
+                &:hover
+                {
+                    background: linear-gradient(to right, #079167, #085caa);
+                    transform: scale(1.2) rotate(-360deg);
+                }
+            }
+        }
+    
+}
+

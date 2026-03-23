@@ -1,0 +1,70 @@
+h1
+{
+    font-family: cursive;
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: 0.3rem;
+    padding: 4rem;
+    
+}
+
+header
+{
+    h2
+    {
+        font-size: 2rem;
+        padding: 1rem;
+        text-align: center;
+    }
+}
+
+body
+{
+    background: linear-gradient(to right, #109cec, #5c21e6, #702ae0);
+    min-height: 100vh;
+}
+
+table 
+{
+    width: 100%; 
+    border :
+    {
+        border-collapse: collapse;
+        border-radius: 10px;
+    }
+
+    th, td 
+    {
+        border: 1px solid #000;
+        padding: 4px;   
+        text-align: left; 
+    }
+
+    th 
+    {
+        background-color: #f2f2f2;
+    }
+}
+
+$pozitivan_ishod : #28a745;
+$negativan_ishod : red;
+
+.greska, .blokiran
+{
+    color : $negativan_ishod;
+}
+
+
+
+.klikabilan:hover
+{
+    cursor: pointer;
+    color: $pozitivan_ishod ;
+}
+
+.uspjeh
+{
+    color :$pozitivan_ishod ;
+}

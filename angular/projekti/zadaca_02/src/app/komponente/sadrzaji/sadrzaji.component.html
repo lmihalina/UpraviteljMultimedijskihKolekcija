@@ -1,0 +1,30 @@
+<button *ngIf="sadrzaji!=undefined" (click)="povratak()">Povratak</button>
+<div id="sadrzaji" *ngIf="sadrzaji!=undefined">
+    @for (s of sadrzaji; track s.multimedijski_sadrzaj_id) 
+    {
+        <figure [ngSwitch]="s.tip">
+            <img *ngSwitchCase="'slika'" [src]="s.putanja" [alt]="s.naziv" width="200">
+            <iframe *ngSwitchCase="'video'" [src]="dezinficiraj(s.putanja)" width="600" height="300"></iframe>
+
+            <figcaption *ngIf="sakriveniMetapodaci == false">
+
+                <div class="naslov">
+                    <p>Naziv : </p>
+                    <p>Autor : </p>
+                    <p>Javnost : </p>
+                    <p>Velicina : </p>
+                    <p>Datum : </p>
+                    <p>Tip : </p>
+                </div>
+                <div class="podatak">
+                    <p>{{s.naziv}}</p>
+                    <p>{{s.autor}}</p>
+                    <p>{{s.javni == 0 ?  "Privatni" : "Javno"}}</p>
+                    <p>{{s.velicina}}</p>
+                    <p>{{s.datum}}</p>
+                    <p>{{s.tip}}</p>
+                </div>
+            </figcaption>  
+        </figure>
+    }
+</div>

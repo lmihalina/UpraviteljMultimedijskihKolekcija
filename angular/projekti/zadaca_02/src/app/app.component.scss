@@ -1,0 +1,22 @@
+nav
+{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;        
+    padding: 0 20px;  
+    
+    a 
+    {
+        padding: 1px;
+        color: #ADF494;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: transform 0.15s linear;
+    }
+    a:hover
+    {
+        border-radius: 1rem;
+        transform: scale(1.2);
+    }
+}

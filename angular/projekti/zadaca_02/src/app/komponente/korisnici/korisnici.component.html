@@ -1,0 +1,50 @@
+<header>
+    <h2>Popis korisnika</h2>
+</header>
+
+<div *ngIf="poruka != undefined">{{poruka}}</div>
+<div *ngIf="korisnici != undefined">
+
+    <table>
+        <tr>
+            <th>Identifikator</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>E-mail adresa</th>
+            <th>Korisničko ime</th>
+            <th>Blokiran</th>
+            <th>Blokiraj korisnika</th>
+            <th>Promijeni ulogu</th>
+            <th>Ažuriraj promjene</th>
+        </tr>
+
+        @for (k of korisnici; track k.korisnik_id) 
+        {
+            <tr>
+                <td>{{k.korisnik_id}}</td>
+                <td>{{k.ime}}</td>
+                <td>{{k.prezime}}</td>
+                <td>{{k.email}}</td>
+                <td>{{k.korisnicko_ime}}</td>
+                <td>{{k.blokiran == 0  ? "Nije blokiran" : "Blokiran"}}</td>
+                <td>
+                <select #blokiran>
+                    <option value="0">Nije blokiran</option>
+                    <option value="1">Blokiran</option>
+                </select>
+                </td>
+                <td>
+                    <select #uloga>
+                        <option value="1">Registrirani korisnik</option>
+                        <option value="2">Moderator</option>
+                    </select>
+                </td>
+                <td>
+                     <button (click)="azurirajKorisnika(k.korisnik_id, blokiran.value, uloga.value)">Ažuriraj</button> 
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div *ngIf="poruka_dodanog_korisnika != undefined">{{poruka_dodanog_korisnika}}</div>
+</div>

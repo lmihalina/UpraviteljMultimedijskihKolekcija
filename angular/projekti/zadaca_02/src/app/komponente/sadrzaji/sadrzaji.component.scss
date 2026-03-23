@@ -1,0 +1,49 @@
+button
+{
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    margin: 2rem;
+    font-size: 1.5rem;
+    background-color: red;
+    border-radius: 1rem;
+    border: none;
+    transition: transform 0.5s ease;
+   
+    &:hover
+    {
+        background: linear-gradient(to right, #079167, #085caa);
+        transform: scale(1.2) rotate(360deg);
+        cursor: pointer;
+    }
+}
+
+#sadrzaji
+{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+figure
+{
+    width: 40%;
+    background: linear-gradient(to left, #079167, #085caa);
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 1rem;
+    text-align: center;
+
+    img, iframe
+    {
+        border-radius: 1rem;
+    }
+
+    figcaption
+    {
+        display: flex;
+        justify-content:center;
+    }
+
+
+}

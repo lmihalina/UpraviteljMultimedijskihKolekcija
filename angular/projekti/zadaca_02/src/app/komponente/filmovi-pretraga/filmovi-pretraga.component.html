@@ -1,0 +1,30 @@
+<header>
+    <h2>Filmovi</h2>
+</header>
+
+<div *ngIf="poruka != undefined">{{poruka}}</div>
+
+<p>
+    <label for="pretrazi">Pretražite filmove</label>
+    <input type="text" id="pretrazi" [(ngModel)]="pretraga" (keyup)="pretrazi()">
+</p>
+
+@if(filmovi != undefined && odabraniFilm == undefined)
+{
+    <table>
+        <tr>
+            <th>Naslov</th>
+        </tr>
+        <hr><hr>
+
+        @for (f of filmovi; track f.id) 
+        {
+            <tr>
+                <td (click)="prikaziDetalje(f.id)" class="klikabilan">{{f.title}}</td>
+            </tr>
+            <hr>
+        }
+    </table>
+}
+
+<app-sadrzaji [sadrzaji]="odabraniFilm" [sakriveniMetapodaci]="true" (sadrzajiChange)="odabraniFilm=$event"></app-sadrzaji>

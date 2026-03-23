@@ -1,0 +1,32 @@
+ol
+{
+    padding: 20px;
+    li
+    {
+        list-style-type: upper-roman;
+        padding: 10px;
+    }
+}
+
+$pozitivan_ishod : #28a745;
+$negativan_ishod : red;
+
+.nenapravljeno
+{
+    color : $negativan_ishod;
+}
+
+.djelomicno
+{
+    color: yellow;
+}
+
+.dodatno
+{
+    color: blue;
+}
+
+.napravljeno
+{
+    color :$pozitivan_ishod ;
+}

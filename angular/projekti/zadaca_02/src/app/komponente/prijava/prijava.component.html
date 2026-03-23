@@ -1,0 +1,28 @@
+<header>
+    <h2>Prijava</h2>
+</header>
+
+<section>
+    <div id="poruka" *ngIf="poruka != undefined">{{poruka}}</div>
+    <form id="forma_prijava" (submit)="prijava()">
+        <p>
+            <label for="korime">Korisničko ime</label>
+            <input type="text" name="korime" required [(ngModel)]="korime">
+        </p>
+        <p>
+            <label for="lozinka">Lozinka</label>
+            <input type="password" name="lozinka" required [(ngModel)]="lozinka">
+        </p>
+        <button type="submit">Prijavi se</button>
+    </form>
+
+    <details>
+        <summary>Testni podaci za prijavu</summary>
+        <p> obican -> rwa</p>
+        <p> moderator -> rwa</p>
+        <p> admin -> rwa</p>
+        <p> test -> rwa</p>
+        <p> lmiha -> rwa</p>
+        <p> inspektor -> rwa</p>
+    </details>
+</section>

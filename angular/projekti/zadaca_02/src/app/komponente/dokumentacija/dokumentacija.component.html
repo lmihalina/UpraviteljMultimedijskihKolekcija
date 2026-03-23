@@ -1,0 +1,284 @@
+<!--
+<div [innerHTML]="html"></div> 
+-->
+<main>
+        <section id="autor">
+            <h3>Autor</h3>
+            <a href="/assets/autor.jpg" target="_blank">
+                <img src="/assets/autor.jpg" alt="Slika autora" width="250" height="250">
+            </a>
+            <p>Leonardo Mihalina</p>
+            <p>
+                <a href="mailto:lmihalina22&#64;student.foi.hr">lmihalina22&#64;student.foi.hr</a>
+            </p>
+        </section>
+
+        <section id="era">
+            <h3>ERA model</h3>
+            <a href="/assets/ERAmodel.png" target="_blank">
+                <img src="/assets/ERAmodel.png" alt="slika ERA modela baze" width="250" height="250">
+            </a>
+        </section>
+
+        <section id="tablica_servisa">
+            <h3>Dokumentacija servisa</h3>
+            <table>
+                <tr>
+                    <th>Putanja</th>
+                    <th>Metoda</th>
+                    <th>Rezultat</th>
+                </tr>
+   
+                <tr>
+                    <td>/api/korisnici</td> <!--uredi ako treba-->
+                    <td>GET</td>
+                    <td>Servis vraća popis korisnika iz baze podataka u obliku polja objekata (JSON). Uvijek će vratiti polje s objektima ili prazno polje. Servis očekuje prijavljenog korisnika s ulogom moderatora ili administratora, u suprotnom baca poruku pogreške. Ukoliko je prijavljen administrator servis vraća sve podatke o korisnicima osim lozinke. Ukoliko je prijavljen moderator servis vraća samo podatke o ID-u i korisničkom imenu. U oba slučaja podaci koji se 'ne vraćaju' su zapravo pogrešne vrijednosti.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnici</td>
+                    <td>POST</td>
+                    <td>Servis dodaje novog korisnika u bazu podataka. Podatke prima u tijelu zahtjeva u obliku KorisnikI sučelja. Kao parametar se treba poslati korisničko ime korisnika pod ključem korime unutar URL-a(query). Ukoliko je korime parametar prazan ili korisnik s poslanim korisničkim imenom već postoji u bazu dogodit će se pogreška sa statusnim kodom 417.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnik</td>
+                    <td>PUT</td>
+                    <td>Servis ažurira postojećeg korisnika u bazi podataka. Servis očekuje prijavljenog korisnika s ulogom administratora, u suprotnom baca poruku pogreške. Podatke prima u tijelu zahtijeva te očekuje korisničko ime, pogrešne prijave, status blokiranosti i id uloge. Ukoliko su svi podaci korektni uspješno će se ažuirati korisnik. Ukoliko korinik ne postoji ili je prazan javit će poruku pogreške a ukoliko nedostaje neki od preostalih podataka tada će se ažuriranje izvršiti no podaci koji nedostaju će se ignorirati kod ažuriranja i istoimeni stupci u bazi će ostati nepromijenjeni.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnik/:korime</td>
+                    <td>GET</td>
+                    <td>Servis dohvaća korisnika prema korisničkom imenu. Treba poslati korisničko ime kao parametar  u URL-u pod ključem korime(params).Servis će vratiti jednog korisnika pod tipom KorisnikI. Ukoliko korisnik ne postoji ili se ne pošalje parametar vratit će se null vrijednost.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/odjava</td>
+                    <td>GET</td>
+                    <td>Servis odjavljuje postojećeg korisnika, odnosno briše sve podatke sesije.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/uloga/:uloga_id</td>
+                    <td>GET</td>
+                    <td>Servis vraća ulogu korisnika. Očekuje se parametar id korisnika u URL-u(params) pod ključem uloga_id. Vratit će se objekt uloge odabranog korisnika pod tipom UlogaI. Ukoliko nije naveden parametar ili uloga odnosno korisnik ne postoji vraća se null vrijednost.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnici/prijava/:korime</td>
+                    <td>GET</td>
+                    <td>Dio servisa služi za autentikaciju korisnika. Kao parametar u URL-u (params) očekuje korisničko ime korisnika koji se prijavljuje. U tijelu zahtjeva očekuje lozinku pod ključem lozinka. Ukoliko parametar korisnika nije naveden dogodit će se greška. Ukoliko je račun korisnika neaktiviran ili blokiran poslat će se poruka pogreške. Ukoliko je korisničko ime uneseno, a lozinka kriva desit će se greška te će se povećati broj neuspjelih pokušaja prijave u bazi,a prilikom 3 pogrešnog pokušaja korisnik se blokira te se neće biti moguće prijaviti i točnom lozinkom. Ukoliko je korisničko ime nepostojeće poslat će se poruka pogreške, no neće se povećavati pogrešne prijave. Ukoliko je lozinka točna te je korisnik aktiviran i nije blokiran poslat će se objekt korisnik tipa KorisnikI, no poslani objekt neće sadržavati ispravnu lozinku radi sigurnosti te će se kreirati sesija omogućavajući korištenje djela aplikacije koji je nedostupan gostima. </td>
+                </tr>
+
+                <tr>
+                    <td>/api/aktivacija</td>
+                    <td>GET</td>
+                    <td>Servis služi za aktivaciju novokreiranog računa korisnika. Servis očekuje u GET parametrima korisničko ime korisnika i njegov aktivacijski kod pod ključevima korime i id. Ukoliko neki od podataka nije naveden servis vraća poruku pogreške. Ukoliko korisničko ime i njegov kod se ne podudaraju sa vrijednostima iz baze, servis vraća poruku pogreške.</td>
+                </tr>
+
+               <!--
+                <tr>
+                    <td>/api/korisnici/prijavljen/korisnik</td>
+                    <td>GET</td>
+                    <td>Servis će dohvatiti trenutnu sesiju te ukoliko je prazna vratit će grešku neautoriziranog pristupa. Ukoliko sadrži korisničko ime vratit će poruku uspjeha što znači da je korisnik prijavljen.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnici/prijavljen/moderator</td>
+                    <td>GET</td>
+                    <td>Servis će dohvatiti trenutnu sesiju te ukoliko je prazna vratit će grešku neautoriziranog pristupa. Ukoliko sadrži korisničko ime te ulogu moderatora ili administratora vratit će poruku uspjeha što znači da je korisnik s ciljanom ulogom prijavljen. Ukoliko je prijavljen običan korisnik također će vratiti grešku neautoriziranog pristupa.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisnici/prijavljen/administrator</td>
+                    <td>GET</td>
+                    <td>Servis će dohvatiti trenutnu sesiju te ukoliko je prazna vratit će grešku neautoriziranog pristupa. Ukoliko sadrži korisničko ime te ulogu administratora vratit će poruku uspjeha što znači da je korisnik s ciljanom ulogom prijavljen. Ukoliko je prijavljen običan korisnik ili moderator također će vratiti grešku neautoriziranog pristupa.</td>
+                </tr>
+                -->
+                <tr>
+                    <td>/api/javneKolekcije</td>
+                    <td>GET</td>
+                    <td>Servis dohvaća sve kolekcije iz baze koje imaju postavljeno svojstvo javnosti. Servis će vratiti polje objekata tipa KolekcijaI (JSON) ili prazno polje.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/kolekcije</td>
+                    <td>GET</td>
+                    <td>Servis dohvaća sve kolekcije iz baze. Servis će vratiti polje objekata tipa KolekcijaI(JSON) ili prazno polje. Servis očekuje prijavljenog korisnika s ulogom moderatora ili administratora, u usprotnom baca poruku pogreške.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/kolekcije</td>
+                    <td>POST</td>
+                    <td>Servis dodaje kolekciju u bazu podataka. Servis očekuje prijavljenog korisnika s ulogom moderatora ili administratora, u suprotnom baca poruku pogreške. Očekuje podatke kolekcije poslane u tijelu zahtjeva. Vraća poruku uspjeha ukoliko sve pođe kako treba a ukoliko se iz nekog razloga desi greška javit će porukom pogreške. Servis ne radi provjere ispravnosti i potpunosti podataka prije unosa.</td>
+                </tr>
+                
+                <tr>
+                    <td>/api/kolekcije</td>
+                    <td>PUT</td>
+                    <td>Servis ažurira podatke kolekcije. Kako bi servis radio, sesija mora postojati, u suprotnom servis baca poruku pogreške. Podaci koje servis očekuje su id kolekcije, javnost, naziv te putanja naslovne slike. Podaci se šalju u tijelu zahtijeva. Ukoliko nekog od navedenih podataka nema, podaci će se svejedno ažurirati, a izostavljeni podaci će ostati nepromijenjeni. Ukoliko id kolekcije nije valjan ili je izostavljen, bacit će se poruka pogreške, no to se nebi smjelo događati prilikom uporabe servisa kroz web aplikaciju. Ukoliko se dogodi greška kod upisa u bazu, servis će baciti poruku pogreške.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/privatneKolekcije</td>
+                    <td>GET</td>
+                    <td>Servis vraća popis kolekcija prijavljenog korisnika. Servis očekuje postojeću sesiju, u suprotnom će vratiti poruku pogreške. U slučaju postojanja sesija vratit će popis kolekcija prijavljenog korisnika u obliku polja objekata tipa KolekcijaI ili praznog polja ukoliko korisnik nema privatne kolekcije ili korisnik ne postoji.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/sadrzaji/:kolekcija_id</td>
+                    <td>GET</td>
+                    <td>Servis vraća mutlimedijske sadržaje odabrane kolekcije. Servis očekuje postojanje sesije, odnosno prijavljenog korisnika, u suprotnom baca poruku pogreške. Servis očekuje id kolekcije spremljen kao URL parametar pod ključem kolekcija_id(params). Ukoliko ne postoji ili nije valjan, servis će vratiti poruku pogreške. </td>
+                </tr>
+
+                <tr>
+                    <td>/api/javniSadrzaji/pretraga</td>
+                    <td>GET</td>
+                    <td>Servis vraća sve javne multimedijske sadržaje koji u svom nazivu sadržavaju unesenu frazu. Ukoliko korisnik nije prijavljen servis vraća poruku pogreške. Servis očekuje unutar GET parametara frazu pod ključem trazi. Ukoliko fraza nije unesena servis vraća poruku pogreške.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/javniSadrzaji/:kolekcija_id</td>
+                    <td>GET</td>
+                    <td>Servis vraća javne mutlimedijske sadržaje odabrane kolekcije. Servis očekuje id kolekcije spremljen kao URL parametar pod ključem kolekcija_id(params). Ukoliko ne postoji ili nije valjan, servis će vratiti poruku pogreške.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/korisniciKolekcije</td>
+                    <td>POST</td>
+                    <td>Servis dodijeljuje odnosno oduzima korisnike koji mogu upravljati određenom kolekcijom. Servis radi tako da briše sve korisnike koji su dodani odabranoj kolekciji te ponovo dodijeljuje samo one korisnike koji su odabrani odnosno poslani. Servis očekuje prijavljenog korisnika čija je uloga moderator ili administrator te u suprotnom baca poruku pogreške. Servis u tijelu zahtijeva očekuje podatke koji se sastoje od identifikacijskog broja kolekcije i polja identifikacijskog broja dodijeljenih korisnika. Ukoliko je ijedno od ovih podataka nedefiniran, servis baca poruku pogreške.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/filmovi</td>
+                    <td>GET</td>
+                    <td>Servis vraća filmove iz TMDB-a dohvaćene prema nazivu. Servis očekuje prijavljenog korisnika, u suprotnom baca poruku pogreške. Servis očekuje podatke u GET parametrima pod ključevima naziv i stranica. Ukoliko je bilo koji podatak nedefiniran servis baca poruku pogreške. U normalnom korištenju web aplikacije ne bi trebalo doći do pogreške zbog nepotpunih podataka.</td>
+                </tr>
+
+                <tr>
+                    <td>/api/film/video</td>
+                    <td>GET</td>
+                    <td>Servis vraća poveznicu prema Youtube web aplikaciji. Dobivena poveznica je spremna da se samo ubaci unutar src atributa kod HTML elementa iframe. Rezultat poveznice biti će trailer odabranog filma u Youtube web aplikaciji ukoliko trailer postoji. Servis očekuje identifikator filma poslanog unutar GET parametara pod ključem id. Ukoliko podatak nije poslan servis vraća poruku pogreške.</td>
+                </tr>
+
+            </table>
+        </section>
+
+        <section id="tablica_aplikacije">
+            <h3>Ispunjenost funkcionalnih zahtjeva</h3>
+            <table>
+                <tr>
+                    <th>Uloga</th>
+                    <th>Funckionalnost</th>
+                    <th>Dovršenost</th>
+                </tr>
+
+                <tr>
+                    <td>Gost</td>
+                    <td>Funckionalnost</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Napravljeno</p>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Gost</td>
+                    <td>Dokumentacija</td>
+                    <td>a. Napravljeno</td>
+                </tr>
+
+                <tr>
+                    <td>Gost</td>
+                    <td>Prijava, Odjava</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Napravljeno</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Gost</td>
+                    <td>Registracija</td>
+                    <td>a. Napravljeno</td>
+                </tr>
+
+                <tr>
+                    <td>Korisnik</td>
+                    <td>Kolekcije</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Napravljeno</p>
+                        <p>c. Napravljeno</p>
+                        <p>d. Nije napravljeno</p>
+                        <p>e. Napravljeno</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Korisnik</td>
+                    <td>Sadržaj</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Napravljeno</p>
+                        <p>c. Nije Napravljeno</p>
+                        <p>d. Nije Napravljeno</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Moderator</td>
+                    <td>Kolekcije</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Djelomično napravljeno - ako se želi maknuti sve korisnike neke kolekcije, radit će samo ako prethodno nisu dodijeljeni korisnici toj kolekciji. Ako jesu, stranica se treba osvježiti kako bi proradilo.</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Admin</td>
+                    <td>Korisnici</td>
+                    <td>
+                        <p>a. Napravljeno</p>
+                        <p>b. Napravljeno</p>
+                        <p>c. Napravljeno</p>
+                    </td>
+                </tr>
+                    
+            </table>
+        </section>
+
+       
+
+        <section id="dodatno">
+            <h3>Dodatne napomene</h3>
+            <ol>
+                <li>Nije napravljena provjera korisničkog unosa na strani poslužitelja.  </li>
+                <li>Nije napravljeno upravljanje pogreškama uzrokovane bazom podataka tako da se aplikacija može srušiti ukoliko se desi nešto neočekivano poput pokušaja unosa stupca tablice koja očekuje unikatne vrijednosti. Na nekim dijelovima aplikacije provjera je napravljena kod servisa, primjerice kod registracije korisnika postojećim korisničkim imenom no ne svugdje.</li>
+            </ol>
+        </section>
+        
+         <section id="ispunjenost_zadace2">
+            <h3>Ispunjenost funkcionalnih i nefunkcionalnih zahtjeva zadaće 2</h3>
+            <ol>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev-> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="dodatno">zahtjev(Dodatni bodovi) -> Nije napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="djelomicno">zahtjev -> Djelomično napravljeno - dizajn prebačen korištenjem SASS preprocesora u scss sintaksi, no dizajnu nije posvećeno puno pažnje te nije napravljen za najbolje iskustvo korisnika. </li>
+                <li class="dodatno">zahtjev(Dodatni bodovi) -> Nije napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="napravljeno">zahtjev -> Napravljeno</li>
+                <li class="nenapravljeno">zahtjev -> Nije napravljeno</li>
+                <li class="dodatno">zahtjev(Dodatni bodovi) -> Nije napravljeno</li>
+            </ol>
+        </section>
+    </main>

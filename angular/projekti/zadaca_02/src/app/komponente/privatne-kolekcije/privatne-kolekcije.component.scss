@@ -1,0 +1,62 @@
+#kolekcija
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+figure
+{
+    display: flex;
+    justify-content: space-between;
+    border: 3px solid rgb(230, 223, 223);
+    border-radius: 1rem;
+    transition: transform 0.75s ease;
+
+    figcaption
+    {
+        padding: 0 5rem;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+
+        select
+        {
+            font-size: inherit;
+            font-weight: inherit;
+            text-align: inherit;
+            width: 80%;
+        }
+
+        button
+        {
+            padding: 0.5rem;
+            margin: 2rem;
+            font-size: 1rem;
+            background-color: limegreen;
+            border-radius: 1rem;
+            border: none;
+            transition: transform 0.5s ease;
+
+            &:hover
+            {
+                background: linear-gradient(to right, #079167, #085caa);
+                transform: scale(1.2) rotate(360deg);
+            }
+        }
+    }
+
+    img
+    {
+        border-radius: 1rem;
+        transition: box-shadow 0.75s ease,
+            filter 0.75s ease;
+        &:hover
+        {
+            cursor: pointer; 
+            box-shadow: 5px 5px 10px rgb(0,0,0);
+            filter: blur(3px);
+        }
+    }
+     
+}

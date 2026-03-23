@@ -1,0 +1,27 @@
+<header>
+    <h2>Vaše kolekcije</h2>
+</header>
+
+<div id="poruka" *ngIf="poruka != undefined">{{poruka}}</div>
+<div id="kolekcija" *ngIf="kolekcije!=undefined && sadrzajiKolekcije==undefined">
+        @for (k of kolekcije; track k.kolekcija_id) 
+        {
+            <figure>
+                <img [src]="k.naslovna_slika_putanja" [alt]="k.naziv" width="200" (click)="prikaziSadrzaj(k.kolekcija_id)">
+                <figcaption>
+                    <p>Naziv : {{k.naziv}}</p>
+                    <p>Javnost : {{k.javna == 0 ? "Javna" : "Privatna"}}</p>
+                    <p>Putanja naslovne slike: </p>
+                    <p>  <input type="text" #putanja>   </p>
+                    <select #javnost>
+                        <option value="1">Javna</option>
+                        <option value="0">Privatna</option>
+                    </select>
+                    <p>    <button (click)="azurirajKolekcije(k.kolekcija_id, javnost.value, putanja.value)">Ažuriraj</button> </p>
+                </figcaption>
+            </figure>
+        }
+    <div *ngIf="poruka_azuriranja != undefined">{{poruka_azuriranja}}</div>
+</div>
+
+<app-sadrzaji [sadrzaji]="sadrzajiKolekcije" (sadrzajiChange)="sadrzajiKolekcije=$event"></app-sadrzaji>

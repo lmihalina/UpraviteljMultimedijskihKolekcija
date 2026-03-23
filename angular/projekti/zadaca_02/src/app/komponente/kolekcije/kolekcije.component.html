@@ -1,0 +1,49 @@
+<header>
+    <h2>Kolekcije</h2>
+</header>
+
+<div id="poruka" *ngIf="poruka != undefined">{{poruka}}</div>
+<div id="kolekcije" *ngIf="kolekcije!=undefined">
+        @for (k of kolekcije; track k.kolekcija_id) 
+        {
+            <figure>
+                <img [src]="k.naslovna_slika_putanja" [alt]="k.naziv" width="200">
+                <figcaption>
+                    <p>Naziv: {{k.naziv}}</p>
+                    <p>Javnost: {{k.javna ? "javna" : "privatna"}}</p>
+                    <p>Dodijelite korisnice</p>
+                    <select multiple #dodijeljeni_korisnici>
+                        @for (k of korisnici; track k.korisnik_id) 
+                        {
+                            <option [value]="k.korisnik_id">{{k.korisnicko_ime}}</option>
+                        }
+                    </select>
+                    <p>  <button (click)="dodijeliKorisnike(k.kolekcija_id, dodijeljeni_korisnici.selectedOptions)" >Ažuriraj</button>   </p>
+                </figcaption>
+            </figure>
+        }      
+
+    <form *ngIf="kolekcije!=undefined" (submit)="novaKolekcija()">
+        <legend>Dodajte novu kolekciju</legend>
+        <fieldset>
+            <p>
+                <label for="naziv">Naziv</label>
+                <input type="text" name="naziv" id="naziv" [(ngModel)]="kolekcija.naziv">
+            </p>
+            <p>
+                <label for="javna">Javnost</label>
+                <input type="radio" name="javna" value="1" [(ngModel)]="kolekcija.javna"> Javna
+                <input type="radio" name="javna" value="0" [(ngModel)]="kolekcija.javna"> Privatna
+            </p>
+            <p>
+                <label for="naslovna_slika_putanja">Putanja naslovne slike</label>
+                <input type="text" name="naslovna_slika_putanja" id="naslovna_slika_putanja" [(ngModel)]="kolekcija.naslovna_slika_putanja">
+            </p>
+            <input type="submit" value="Dodajte">
+            <div *ngIf="poruka_dodane_kolekcije != undefined">{{poruka_dodane_kolekcije}}</div>
+        </fieldset>
+    </form>
+</div>
+
+
+

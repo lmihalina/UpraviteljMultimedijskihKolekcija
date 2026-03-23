@@ -1,0 +1,45 @@
+<header>
+    <h2>Registracija</h2>
+</header>
+
+<section>
+    <div id="poruka" *ngIf="poruka != undefined">{{poruka}}</div>
+    <form (submit)="registracija()">
+        <p>
+            <label for="ime">Ime</label>
+            <input type="text" id="ime" name="ime" [(ngModel)]="ime">
+        </p>
+        <p>
+            <label for="prezime">Prezime</label>
+            <input type="text" id="prezime" name="prezime" [(ngModel)]="prezime">
+        </p>
+        <p>
+            <label for="email">E-mail adresa</label>
+            <input type="email" name="email" id="email" required [(ngModel)]="email">
+        </p>
+        <p> 
+            <label for="korime">Korisničko ime</label>
+            <input type="text" name="korime" id="korime" required [(ngModel)]="korime">
+        </p>
+        <p>
+            <label for="lozinka">Lozinka</label>
+            <input type="password" name="lozinka" id="lozinka" required [(ngModel)]="lozinka">
+        </p>
+        <p>
+            <label for="spol">Spol</label>
+            <input type="text" name="spol" id="spol" [(ngModel)]="spol">
+        </p>
+        <p>
+            <label for="adresa">Adresa</label>
+            <input type="text" name="adresa" id="adresa" [(ngModel)]="adresa">
+        </p>
+        <p>
+            <label for="telefon">Telefon</label>
+            <input type="text" name="telefon" id="telefon" [(ngModel)]="telefon">
+        </p>
+
+        <button type="submit">Registracija</button>
+        <button type="reset">Poništi</button>
+
+    </form>
+</section>
